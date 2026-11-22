@@ -154,7 +154,7 @@ paket_key = PAKET_CODES.get(paket_key, paket_key)
 if condition not in SYSTEM_PROMPTS or paket_key not in PAKETE:
     st.error(
         "Technischer Fehler: Der Link ist ungültig. Bitte wende dich an die "
-        "Studienleitung."
+        "Studienleitung: a12439655@unet.univie.ac.at"
     )
     st.stop()
 
@@ -307,7 +307,9 @@ else:
                         log_row("system", f"OPENAI-FEHLER: {e}", turn)
                         st.error(
                             "Es ist ein technischer Fehler aufgetreten. Bitte sende "
-                            "deine Antwort noch einmal ab."
+                            "deine Antwort noch einmal ab. Falls das Problem bestehen "
+                            "bleibt, wende dich bitte an die Studienleitung: "
+                            "a12439655@unet.univie.ac.at"
                         )
                         st.stop()
         else:
