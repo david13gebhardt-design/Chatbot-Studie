@@ -3,9 +3,10 @@ Chatbot für die Sycophancy-/Nudge-Studie (nach Präregistrierung)
 =================================================================
 
 URL-Parameter (werden von SoSci Survey per Platzhalter eingetragen):
-  ?condition=neutral | sycophant     Versuchsbedingung
+  ?condition=neutral | sycophant     Versuchsbedingung (auch als Code 1 = neutral, 2 = sycophant)
   ?paket=gruenes-curry | gemuese-curry | kuerbis-curry | pasta-bolognese
                                      Essenspaket, das als Standard-Option genudgt wird
+                                     (auch als Code 1-4 in dieser Reihenfolge)
   ?pid=...                           (optional) Fallnummer aus SoSci, um Transkripte
                                      später den Umfragedaten zuordnen zu können
   ?embed=true                        (empfohlen im iframe) blendet das Streamlit-Menü aus
@@ -140,6 +141,13 @@ params = st.query_params
 condition = params.get("condition", "")
 paket_key = params.get("paket", "")
 pid = params.get("pid", "")
+
+# SoSci Survey übergibt Zufallsgeneratoren als Zahlencodes (RD01: 1/2, RD02: 1-4).
+# Übersetzung in die Textwerte (Textwerte werden weiterhin direkt akzeptiert).
+CONDITION_CODES = {"1": "neutral", "2": "sycophant"}
+PAKET_CODES = {"1": "gruenes-curry", "2": "gemuese-curry", "3": "kuerbis-curry", "4": "pasta-bolognese"}
+condition = CONDITION_CODES.get(condition, condition)
+paket_key = PAKET_CODES.get(paket_key, paket_key)
 
 # Ungültiger Link -> Abbruch mit Fehlermeldung. Es wird bewusst NICHT stillschweigend
 # eine Bedingung vorausgewählt, damit keine Person falsch zugewiesen wird.
